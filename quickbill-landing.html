@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBill – Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #1f2937;
+      background-color: #f9fafb;
+    }
+    header {
+      background-color: #0f172a;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background-color: #1e293b;
+      padding: 1rem;
+    }
+    nav a {
+      color: #facc15;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    section {
+      padding: 3rem 1.5rem;
+      max-width: 960px;
+      margin: auto;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .feature h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+    .cta {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: #fbbf24;
+      color: black;
+    }
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .cta a {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #0f172a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QuickBill</h1>
+    <p>Plăți rapide, moderne și fără aplicație, direct de la masă.</p>
+  </header>
+
+  <nav>
+    <a href="#features">Caracteristici</a>
+    <a href="#demo">Demo Interactiv</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="features">
+    <h2>Ce oferă QuickBill?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Fără aplicație</h3>
+        <p>Clientul scanează un cod QR și accesează nota direct în browser.</p>
+      </div>
+      <div class="feature">
+        <h3>Plată rapidă</h3>
+        <p>Plătești în câteva secunde cu card, Apple Pay sau Google Pay.</p>
+      </div>
+      <div class="feature">
+        <h3>Split Bill & Tips</h3>
+        <p>Împarți nota între prieteni și adaugi bacșiș, fără discuții.</p>
+      </div>
+      <div class="feature">
+        <h3>Dashboard pentru restaurante</h3>
+        <p>Monitorizare în timp real a comenzilor și plăților din locație.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="demo">
+    <h2>Încearcă Demo-ul Interactiv</h2>
+    <p>Simulează experiența unui client care plătește cu QuickBill.</p>
+    <a href="quickbill-ui-demo.html">Lansează demo</a>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Dacă ai întrebări sau dorești să colaborezi cu noi:</p>
+    <p>Email: contact@quickbill.app</p>
+    <p>Instagram: @quickbill</p>
+  </section>
+
+  <footer>
+    &copy; 2025 QuickBill. Toate drepturile rezervate.
+  </footer>
+</body>
+</html>
