@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBill – Demo UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f172a;
+      color: white;
+    }
+    .screen {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .active {
+      display: flex;
+    }
+    .button {
+      padding: 15px 30px;
+      margin: 10px;
+      background-color: #fbbf24;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .card {
+      background-color: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .option {
+      background-color: #334155;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .option:hover {
+      background-color: #475569;
+    }
+    .highlight {
+      background-color: #fbbf24;
+      color: black;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .logo {
+      font-size: 28px;
+      color: #fbbf24;
+      font-weight: bold;
+    }
+    .loading {
+      animation: spin 1s linear infinite;
+      margin: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Screen -->
+  <div id="screen0" class="screen active">
+    <div class="card">
+      <div class="logo">QuickBill</div>
+      <p>Smart Restaurant Payments</p>
+      <div class="loading">🔄</div>
+      <button class="button" onclick="nextScreen('screen1')">Start</button>
+    </div>
+  </div>
+
+  <!-- Bill Screen -->
+  <div id="screen1" class="screen">
+    <div class="card">
+      <h2>Your Bill (Table #12)</h2>
+      <p>Grilled Salmon x1 — <strong>$24.99</strong></p>
+      <p>Caesar Salad x2 — <strong>$19.98</strong></p>
+      <h3>Split Bill</h3>
+      <div class="option">2 People</div>
+      <div class="option">3 People</div>
+      <div class="option">4 People</div>
+      <h3>Add Tip</h3>
+      <div class="option">5%</div>
+      <div class="option">10%</div>
+      <div class="option">15%</div>
+      <p>Subtotal: $44.97</p>
+      <p>Tip (5%): $2.25</p>
+      <h3>Total: <span class="highlight">$47.22</span></h3>
+      <button class="button" onclick="nextScreen('screen2')">Proceed to Payment</button>
+    </div>
+  </div>
+
+  <!-- Payment Method Screen -->
+  <div id="screen2" class="screen">
+    <div class="card">
+      <h2>Payment</h2>
+      <div class="option">💳 Credit/Debit Card</div>
+      <div class="option">🍎 Apple Pay</div>
+      <div class="option">🟠 Google Pay</div>
+      <h3>Amount: <span class="highlight">$47.22</span></h3>
+      <p>Processing Fee: $0.00</p>
+      <button class="button" onclick="nextScreen('screen3')">Pay Now</button>
+    </div>
+  </div>
+
+  <!-- Payment Confirmation -->
+  <div id="screen3" class="screen">
+    <div class="card">
+      <div style="font-size:40px">✅</div>
+      <h2>Payment Successful!</h2>
+      <p>Thank you for dining with us.</p>
+      <button class="button" onclick="alert('Downloading receipt...')">Download Receipt</button>
+      <button class="button" onclick="alert('Receipt sent to your email.')">Email Receipt</button>
+      <button class="button" onclick="alert('Feedback form coming soon.')">Leave Feedback</button>
+      <button class="button" onclick="nextScreen('screen0')">Return to Menu</button>
+    </div>
+  </div>
+
+  <script>
+    function nextScreen(id) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
