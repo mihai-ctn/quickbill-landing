@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBill – Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+    header {
+      background-color: #0f172a;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      color: #cbd5e1;
+      margin-top: 0.5rem;
+    }
+    nav {
+      background-color: #1e293b;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    nav a {
+      color: #facc15;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    section {
+      max-width: 960px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .feature {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .feature h3 {
+      color: #0f172a;
+      margin-top: 0;
+    }
+    .pricing {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .cta {
+      text-align: center;
+      background-color: #fbbf24;
+      padding: 3rem 1.5rem;
+      color: black;
+    }
+    .cta a {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #0f172a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    footer {
+      background-color: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>QuickBill</h1>
+    <p>Plăți rapide, moderne și fără aplicație, direct de la masă.</p>
+  </header>
+
+  <nav>
+    <a href="https://docs.google.com/document/d/1NRXKBYwp4ZCRh2Aq-XuekW2bNVKKio0v/edit?usp=sharing&ouid=106529473188000294910&rtpof=true&sd=true" target="_blank">Business Foundation</a>
+    <a href="https://www.figma.com/design/yW3CvD7gD2Wi5ExbBqNK7A/QuickBill?node-id=0-1&p=f&t=PDH7G8XcLantSAOR-0" target="_blank">Mock-up</a>
+    <a href="https://docs.google.com/presentation/d/1i2oh0M0wm4fNtzB4OTaOS8yOjDGlKsSaVYcMysAlYYk/edit?usp=sharing" target="_blank">Pitch</a>
+    <a href="#features">Caracteristici</a>
+    <a href="#pricing">Prețuri</a>
+    <a href="#demo">Demo</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="features">
+    <h2>Ce oferă QuickBill?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Fără aplicație</h3>
+        <p>Clientul scanează un cod QR și accesează nota direct în browser.</p>
+      </div>
+      <div class="feature">
+        <h3>Plată rapidă</h3>
+        <p>Plătești în câteva secunde cu card, Apple Pay sau Google Pay.</p>
+      </div>
+      <div class="feature">
+        <h3>Split Bill & Tips</h3>
+        <p>Împarți nota între prieteni și adaugi bacșiș, fără discuții.</p>
+      </div>
+      <div class="feature">
+        <h3>Dashboard pentru restaurante</h3>
+        <p>Monitorizare în timp real a comenzilor și plăților din locație.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <h2>Prețuri</h2>
+    <p><strong>Taxă unică de implementare:</strong> 5.000 RON</p>
+    <p><strong>Plan Basic:</strong> 300 RON / lună – până la 200 tranzacții</p>
+    <p><strong>Plan Pro:</strong> 500 RON / lună – tranzacții nelimitate + branding personalizat</p>
+    <p><strong>Plan Gratuit:</strong> cu comision 1% pe tranzacție</p>
+  </section>
+
+  <section class="cta" id="demo">
+    <h2>Încearcă Demo-ul Interactiv</h2>
+    <p>Simulează experiența unui client care plătește cu QuickBill.</p>
+    <a href="quickbill-ui-demo.html">Lansează demo</a>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: contact@quickbill.app</p>
+    <p>Instagram: @quickbill</p>
+  </section>
+
+  <footer>
+    &copy; 2025 QuickBill. Toate drepturile rezervate.
+  </footer>
+</body>
+</html>
