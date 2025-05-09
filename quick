@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickBill | Scan. Pay. Done.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --primary: #2E59F3;
+      --primary-dark: #1E47D8;
+      --accent: #FACC15;
+      --text-dark: #0F172A;
+      --text-light: #E2E8F0;
+      --text-muted: #94A3B8;
+      --bg-light: #F9FAFB;
+      --bg-dark: #0F172A;
+      --surface: #ffffff;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Poppins',sans-serif; background:var(--bg-light); color:var(--text-dark); overflow-x:hidden; }
+
+    /* Navigation */
+    nav {
+      background: var(--bg-dark);
+      padding:1rem 2rem;
+      position:sticky; top:0;
+      display:flex; justify-content:space-between; align-items:center;
+      z-index:1000; box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    }
+    .nav-logo { color:white; font-weight:700; font-size:1.5rem; text-decoration:none; }
+    .nav-logo span { color:var(--accent); }
+    .menu { display:flex; gap:1.5rem; }
+    .menu a {
+      color: var(--text-light);
+      text-decoration:none; font-weight:500;
+      transition:color .3s;
+    }
+    .menu a:hover { color:var(--accent); }
+    .hamburger { display:none; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer; }
+
+    /* Hero */
+    header {
+      background: var(--bg-dark);
+      color:white; position:relative; overflow:hidden;
+    }
+    .header-bg { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; opacity:.15; }
+    .header-bg-1 { background:linear-gradient(45deg,var(--primary),transparent); }
+    .header-bg-2 { background:radial-gradient(circle at bottom right,var(--accent),transparent 60%); }
+    .header-content {
+      padding:5rem 2rem;
+      position:relative; z-index:2;
+      text-align:center;
+    }
+    .logo {
+      font-weight:800; font-size:3rem; letter-spacing:-1px;
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:.5rem;
+    }
+    .logo-icon {
+      margin-right:1rem; font-size:2.5rem; color:var(--accent);
+    }
+    header p {
+      margin-top:.5rem; font-size:1.2rem; color:var(--text-light);
+    }
+    .header-buttons {
+      margin-top:2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+    }
+    .btn {
+      display:inline-block; padding:.75rem 1.5rem; border-radius:8px;
+      font-weight:600; font-size:1rem; text-decoration:none; border:none;
+      cursor:pointer; transition:all .3s;
+    }
+    .btn-primary {
+      background:var(--primary); color:white;
+    }
+    .btn-primary:hover {
+      background:var(--primary-dark); transform:translateY(-2px);
+    }
+    .btn-outline {
+      background:transparent; color:var(--text-light); border:2px solid var(--text-light);
+    }
+    .btn-outline:hover {
+      background:var(--text-light); color:var(--bg-dark);
+      transform:translateY(-2px);
+    }
+    .btn-accent {
+      background:var(--accent); color:var(--text-dark);
+    }
+    .btn-accent:hover {
+      filter:brightness(1.1); transform:translateY(-2px);
+    }
+
+    /* Phone Demo */
+    .phone-demo { margin:2rem auto -5rem; position:relative; max-width:300px; z-index:3; }
+    .phone-frame {
+      width:100%; aspect-ratio:9/19; background:white;
+      border:8px solid #333; border-radius:2rem; overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .phone-screen { display:flex; flex-direction:column; height:100%; padding:1rem; }
+    .phone-header { display:flex; justify-content:space-between; color:#666; font-size:.8rem; margin-bottom:1rem; }
+    .phone-title { text-align:center; margin-bottom:1rem; font-weight:600; }
+    .bill-item, .bill-total {
+      display:flex; justify-content:space-between; padding:.5rem 0; font-size:.8rem;
+    }
+    .bill-item { border-bottom:1px solid #eee; }
+    .bill-total { font-weight:600; font-size:.9rem; margin-top:1rem; }
+    .tip-options { display:flex; gap:.5rem; justify-content:center; margin:1rem 0; }
+    .tip-btn {
+      padding:.4rem .6rem; border:1px solid #ddd; border-radius:4px;
+      font-size:.7rem; cursor:pointer;
+    }
+    .tip-btn.active {
+      background:var(--primary); color:white; border-color:var(--primary);
+    }
+    .pay-btn {
+      margin-top:auto; width:100%; padding:.6rem; border:none;
+      background:var(--primary); color:white; font-weight:600;
+      border-radius:.5rem; cursor:pointer;
+    }
+
+    /* Sections */
+    section { padding:5rem 1.5rem; max-width:960px; margin:auto; }
+    .section-title { text-align:center; font-size:2rem; margin-bottom:3rem; font-weight:700; }
+
+    /* Features */
+    .features-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;
+    }
+    .feature-card {
+      position:relative; background:white; padding:2rem; border-radius:1rem;
+      overflow:hidden; box-shadow:var(--shadow); transition:transform .3s;
+    }
+    .feature-card:hover { transform:translateY(-5px); }
+    .feature-bg {
+      position:absolute; top:-50px; right:-50px;
+      width:150px; height:150px; background:rgba(46,89,243,.05);
+      border-radius:50%; z-index:0;
+    }
+    .feature-icon {
+      position:relative; z-index:1;
+      background:var(--primary); color:white;
+      width:50px; height:50px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; margin-bottom:1.5rem;
+    }
+    .feature-card h3 {
+      position:relative; z-index:1; margin-bottom:1rem;
+    }
+    .feature-card p {
+      position:relative; z-index:1; color:var(--text-muted);
+    }
+
+    /* How It Works */
+    .steps {
+      display:flex; flex-direction:column; gap:2rem; max-width:800px; margin:auto;
+    }
+    .step {
+      display:flex; gap:2rem; align-items:flex-start;
+    }
+    .step-number {
+      flex-shrink:0; background:var(--accent); color:var(--text-dark);
+      width:40px; height:40px; border-radius:50%; display:flex;
+      align-items:center; justify-content:center; font-weight:700;
+    }
+    .step-content h3 { margin-bottom:.5rem; font-size:1.5rem; }
+    .step-content p { color:var(--text-muted); }
+
+    /* Pricing */
+    .pricing-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin-top:3rem;
+    }
+    .pricing-card {
+      background:var(--surface); border-radius:1rem; overflow:hidden;
+      box-shadow:var(--shadow); transition:transform .3s;
+    }
+    .pricing-card:hover { transform:translateY(-10px); }
+    .pricing-header { padding:2rem; text-align:center; border-bottom:1px solid #eee; }
+    .pricing-header h3 { font-size:1.5rem; margin-bottom:.5rem; }
+    .pricing-price {
+      font-size:2rem; font-weight:700; color:var(--primary); margin:1rem 0;
+    }
+    .pricing-price span { font-size:1rem; font-weight:400; color:var(--text-muted); }
+    .pricing-features { list-style:none; margin-bottom:2rem; }
+    .pricing-features li {
+      padding:.5rem 0; display:flex; align-items:center; gap:.5rem;
+    }
+    .pricing-features i { color:var(--primary); }
+    .popular-badge {
+      position:absolute; top:1rem; right:1rem;
+      background:var(--primary); color:white; padding:.25rem .75rem;
+      border-radius:2rem; font-size:.8rem; font-weight:600;
+    }
+
+    /* Testimonials */
+    .testimonial-slider { max-width:800px; margin:auto; overflow:hidden; position:relative; }
+    .testimonial-track { display:flex; transition:transform .5s ease; }
+    .testimonial { min-width:100%; padding:2rem; }
+    .testimonial-content {
+      background:white; padding:2rem; border-radius:1rem; box-shadow:var(--shadow);
+      position:relative;
+    }
+    .testimonial-text { font-style:italic; margin-bottom:1.5rem; }
+    .testimonial-author { display:flex; align-items:center; gap:1rem; }
+    .author-avatar {
+      width:50px; height:50px; border-radius:50%;
+      background:#eee; display:flex; align-items:center; justify-content:center;
+      color:#666;
+    }
+    .testimonial-controls {
+      display:flex; justify-content:center; gap:1rem; margin-top:2rem;
+    }
+    .testimonial-btn {
+      background:white; border:none; width:40px; height:40px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
+      box-shadow:var(--shadow); transition:all .3s;
+    }
+    .testimonial-btn:hover {
+      background:var(--primary); color:white;
+    }
+
+    /* FAQ Accordion */
+    .accordion { max-width:800px; margin:auto; }
+    .accordion-item { border-bottom:1px solid #eee; }
+    .accordion-header {
+      padding:1.5rem 0; display:flex; justify-content:space-between;
+      align-items:center; cursor:pointer;
+    }
+    .accordion-header h3 { font-size:1.2rem; font-weight:600; }
+    .accordion-icon { transition:transform .3s; }
+    .accordion-item.active .accordion-icon { transform:rotate(180deg); }
+    .accordion-content {
+      max-height:0; overflow:hidden; transition:max-height .3s ease;
+    }
+    .accordion-item.active .accordion-content { max-height:500px; }
+    .accordion-body { padding:0 0 1.5rem; color:var(--text-muted); }
+
+    /* Roadmap */
+    .timeline { max-width:800px; margin:auto; }
+    .timeline-step { margin-bottom:2rem; }
+    .timeline-step h3 { font-size:1.5rem; margin-bottom:.5rem; }
+    .timeline-step p { color:var(--text-muted); }
+
+    /* Contact */
+    .contact-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:3rem;
+    }
+    .contact-info h3, .contact-form h3 { margin-bottom:1.5rem; font-size:1.5rem; }
+    .info-item { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; }
+    .info-icon { color:var(--primary); font-size:1.2rem; }
+    .form-control {
+      width:100%; padding:1rem; border:1px solid #ddd; border-radius:.5rem;
+      font-family:inherit; font-size:1rem; margin-bottom:1.5rem;
+    }
+    textarea.form-control { min-height:150px; resize:vertical; }
+    .contact-form button {
+      background:var(--primary); color:white; border:none;
+      padding:1rem 2rem; border-radius:.5rem; cursor:pointer; font-weight:600;
+    }
+
+    /* Footer */
+    footer { background:var(--bg-dark); color:var(--text-light); padding:4rem 0 2rem; }
+    .footer-grid { max-width:1200px; margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:3rem; margin-bottom:3rem; }
+    .footer-logo { display:flex; align-items:center; gap:.5rem; font-weight:700; font-size:1.5rem; margin-bottom:1rem; }
+    .footer-logo span { color:var(--accent); }
+    .footer-desc { color:var(--text-muted); margin-bottom:1.5rem; }
+    .social-links { display:flex; gap:1rem; }
+    .social-link {
+      width:36px; height:36px; background:rgba(255,255,255,.1);
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      color:white; text-decoration:none; transition:all .3s;
+    }
+    .social-link:hover { background:var(--primary); transform:translateY(-3px); }
+    .footer-title { font-size:1.2rem; margin-bottom:1.5rem; font-weight:600; }
+    .footer-links { list-style:none; }
+    .footer-links li { margin-bottom:.75rem; }
+    .footer-links a { color:var(--text-muted); text-decoration:none; transition:color .3s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-bottom { text-align:center; padding-top:2rem; border-top:1px solid rgba(255,255,255,.1); color:var(--text-muted); font-size:.9rem; }
+
+    /* Scroll-top */
+    .scroll-top {
+      position:fixed; bottom:2rem; right:2rem; width:50px; height:50px;
+      background:var(--primary); color:white; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; opacity:0; visibility:hidden; transition:all .3s; z-index:100;
+    }
+    .scroll-top.visible { opacity:1; visibility:visible; }
+    .scroll-top:hover { background:var(--primary-dark); transform:translateY(-3px); }
+
+    /* Mobile Nav */
+    @media (max-width:768px) {
+      .menu { position:fixed; top:60px; left:0; right:0; background:var(--bg-dark); padding:1rem; flex-direction:column; align-items:flex-start; transform:translateY(-150%); transition:transform .3s; }
+      .menu.active { transform:translateY(0); }
+      .hamburger { display:block; }
+    }
+    /* Fade-in utility */
+    .fade-in { opacity:0; transform:translateY(20px); transition:opacity .5s ease,transform .5s ease; }
+    .fade-in.active { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo">Quick<span>Bill</span></a>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
+    <div class="menu">
+      <a href="#features">Caracteristici</a>
+      <a href="#pricing">Prețuri</a>
+      <a href="#demo">Demo</a>
+      <a href="#stats">Statistici</a>
+      <a href="#faq">FAQ</a>
+      <a href="#roadmap">Lansare</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header>
+    <div class="header-bg header-bg-1"></div>
+    <div class="header-bg header-bg-2"></div>
+    <div class="header-content fade-in">
+      <div class="logo">
+        <span class="logo-icon"><i class="fas fa-bolt"></i></span>
+        <span>QuickBill</span>
+      </div>
+      <p>Plăți rapide, moderne și fără aplicație, direct de la masă.</p>
+      <h2 style="color:#FACC15;font-weight:300;letter-spacing:1px; margin-top:1rem;">Scan. Pay. Done.</h2>
+      <div class="header-buttons">
+        <a href="#demo" class="btn btn-accent">Încearcă Demo</a>
+        <a href="#pricing" class="btn btn-outline">Vezi Prețuri</a>
+      </div>  
+      <div class="phone-demo fade-in">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span>QuickBill</span><span>✓ Securizat</span>
+            </div>
+            <div class="phone-title">Nota de plată - Masa #42</div>
+            <div class="bill-item"><span>Pizza Margherita</span><span>38 LEI</span></div>
+            <div class="bill-item"><span>Paste Carbonara</span><span>42 LEI</span></div>
+            <div class="bill-item"><span>Limonadă</span><span>18 LEI</span></div>
+            <div class="bill-item"><span>Cappuccino</span><span>14 LEI</span></div>
+            <div class="bill-total"><span>Total:</span><span>112 LEI</span></div>
+            <div class="tip-options">
+              <div class="tip-btn">0%</div>
+              <div class="tip-btn active">10%</div>
+              <div class="tip-btn">15%</div>
+              <div class="tip-btn">20%</div>
+            </div>
+            <button class="pay-btn">Plătește 123.20 LEI</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features" class="fade-in">
+    <h2 class="section-title">Caracteristici cheie</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-bg"></div>
+        <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
+        <h3>Fără aplicație</h3>
+        <p>Scanezi codul QR și plătești instant, fără instalări.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-bg"></div>
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Plată rapidă</h3>
+        <p>Cu Apple/Google Pay și card bancar în câteva secunde.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-bg"></div>
+        <div class="feature-icon"><i class="fas fa-users"></i></div>
+        <h3>Split Bill & Tips</h3>
+        <p>Împarte nota și adaugă procentul de bacșiș.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-bg"></div>
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Dashboard</h3>
+        <p>Monitorizezi plățile în timp real din interfața restaurantului.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works fade-in">
+    <h2 class="section-title">Cum funcționează</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Scanează QR</h3>
+          <p>Codul QR de pe masă te duce direct la nota de plată.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Alege bacșiș</h3>
+          <p>Selectezi procentul de tips și vezi totalul actualizat.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Plătește</h3>
+          <p>Finalizezi cu Apple Pay, Google Pay sau card bancar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="pricing fade-in">
+    <h2 class="section-title">Planuri & Prețuri</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Gratuit</h3>
+          <p><span>1%</span> comision</p>
+        </div>
+        <div class="pricing-body">
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Funcționalități de bază</li>
+            <li><i class="fas fa-check-circle"></i> Suport email</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Începe Gratuit</a>
+        </div>
+      </div>
+      <div class="pricing-card popular">
+        <span class="popular-badge">Popular</span>
+        <div class="pricing-header">
+          <h3>Basic</h3>
+          <p><span>300 RON</span>/lună</p>
+        </div>
+        <div class="pricing-body">
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Până la 200 tranzacții</li>
+            <li><i class="fas fa-check-circle"></i> Branding personalizat</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Alege Basic</a>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Pro</h3>
+          <p><span>500 RON</span>/lună</p>
+        </div>
+        <div class="pricing-body">
+          <ul class="pricing-features">
+            <li><i class="fas fa-check-circle"></i> Tranzacții nelimitate</li>
+            <li><i class="fas fa-check-circle"></i> Integrări POS avansate</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Alege Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Anchor -->
+  <div id="stats"></div>
+
+  <!-- Statistics -->
+  <section id="stats" class="fade-in">
+    <h2 class="section-title">Statistici QuickBill</h2>
+    <div class="stats">
+      <div class="statbox"><h3 data-target="200">0</h3><p>tranzacții simulate</p></div>
+      <div class="statbox"><h3 data-target="5">0</h3><p>restaurante partenere</p></div>
+      <div class="statbox"><h3 data-target="10">0</h3><p>secunde/tranzacție</p></div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials fade-in">
+    <h2 class="section-title">Testimoniale</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial-track">
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <p class="testimonial-text">„QuickBill ne-a crescut satisfacția clienților și am redus timpul de așteptare cu 80%!”</p>
+            <div class="testimonial-author">
+              <div class="author-avatar"><i class="fas fa-user"></i></div>
+              <div class="author-info">
+                <h4>Manager Bistro X</h4>
+                <p>București</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <p class="testimonial-text">„Instalarea a durat 30 de minute, iar echipa a fost impresionată de rapiditatea plăților.”</p>
+            <div class="testimonial-author">
+              <div class="author-avatar"><i class="fas fa-user"></i></div>
+              <div class="author-info">
+                <h4>Proprietar Café Y</h4>
+                <p>Cluj-Napoca</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-controls">
+        <button class="testimonial-btn prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="testimonial-btn next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq fade-in">
+    <h2 class="section-title">Întrebări frecvente</h2>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>Trebuie aplicație?</h3>
+          <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-content"><div class="accordion-body">QuickBill funcționează exclusiv în browser.</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>Este sigur?</h3>
+          <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-content"><div class="accordion-body">Toate tranzacțiile sunt criptate și procesate prin Stripe.</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <h3>Pot personaliza?</h3>
+          <i class="fas fa-chevron-down accordion-icon"></i>
+        </div>
+        <div class="accordion-content"><div class="accordion-body">Da, planul Pro include branding și integrări avansate.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section id="roadmap" class="fade-in">
+    <h2 class="section-title">Plan de lansare</h2>
+    <div class="timeline">
+      <div class="timeline-step">
+        <h3>🔧 MVP Live</h3>
+        <p>Demo public disponibil și testat.</p>
+      </div>
+      <div class="timeline-step">
+        <h3>📍 Pilot Local</h3>
+        <p>5 restaurante partenere din București.</p>
+      </div>
+      <div class="timeline-step">
+        <h3>🚀 Lansare comercială</h3>
+        <p>Campanie națională și suport extins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact fade-in">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Date de contact</h3>
+        <div class="info-item"><i class="fas fa-envelope info-icon"></i><p>contact@quickbill.app</p></div>
+        <div class="info-item"><i class="fas fa-phone info-icon"></i><p>+40 123 456 789</p></div>
+        <div class="info-item"><i class="fas fa-map-marker-alt info-icon"></i><p>București, România</p></div>
+      </div>
+      <form class="contact-form" onsubmit="return validateForm()">
+        <h3>Trimite-ne un mesaj</h3>
+        <input class="form-control" type="text" id="name" placeholder="Nume" required>
+        <input class="form-control" type="email" id="email" placeholder="Email" required>
+        <textarea class="form-control" id="message" placeholder="Mesaj" required></textarea>
+        <button class="btn btn-primary" type="submit">Trimite</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid container">
+      <div>
+        <div class="footer-logo"><i class="fas fa-bolt"></i> Quick<span>Bill</span></div>
+        <p class="footer-desc">Simplificăm plata la restaurant prin tehnologie modernă și UX intuitiv.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Produs</h4>
+        <ul class="footer-links">
+          <li><a href="#features">Caracteristici</a></li>
+          <li><a href="#pricing">Prețuri</a></li>
+          <li><a href="#demo">Demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Companie</h4>
+        <ul class="footer-links">
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Cariere</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Asistență</h4>
+        <ul class="footer-links">
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Termeni & Condiții</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 QuickBill. Toate drepturile rezervate.</div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <div class="scroll-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script>
+    // Animate header and phone
+    gsap.from('.header-content', {opacity:0, y:50, duration:1});
+    gsap.from('.phone-demo', {opacity:0, y:50, duration:1, delay:0.5});
+
+    // Fade-in on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        ScrollTrigger.create({
+          trigger: el,
+          onEnter: () => el.classList.add('active')
+        });
+      });
+    });
+
+    // Counter animation
+    document.querySelectorAll('.statbox h3').forEach(counter => {
+      const update = () => {        
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = Math.ceil(target / 200);
+        if (count < target) {
+          counter.innerText = count + increment;
+          requestAnimationFrame(update);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      update();
+    });
+
+    // Testimonial slider
+    let idx = 0;
+    const track = document.querySelector('.testimonial-track');
+    document.querySelector('.next').onclick = () => {
+      idx = (idx + 1) % track.children.length;
+      track.style.transform = `translateX(-${idx*100}%)`;
+    };
+    document.querySelector('.prev').onclick = () => {
+      idx = (idx - 1 + track.children.length) % track.children.length;
+      track.style.transform = `translateX(-${idx*100}%)`;
+    };
+
+    // Accordion
+    document.querySelectorAll('.accordion-header').forEach(h => {
+      h.onclick = () => {
+        h.parentElement.classList.toggle('active');
+      };
+    });
+
+    // Form validation
+    function validateForm() {
+      const n = document.getElementById('name').value.trim();
+      const e = document.getElementById('email').value.trim();
+      const m = document.getElementById('message').value.trim();
+      if (!n || !e || !m) { alert('Completează toate câmpurile'); return false; }
+      alert('Mesaj trimis!'); return false;
+    }
+
+    // Scroll to top
+    window.addEventListener('scroll', () => {
+      document.querySelector('.scroll-top').classList.toggle('visible', window.scrollY > 300);
+    });
+
+    // Mobile menu toggle
+    document.querySelector('.hamburger').onclick = () => {
+      document.querySelector('.menu').classList.toggle('active');
+    };
+  </script>
+</body>
+</html>
