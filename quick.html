@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QuickBill | Scan. Pay. Done.</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
   <style>
@@ -23,7 +23,7 @@
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family:'Poppins',sans-serif; background:var(--bg-light); color:var(--text-dark); overflow-x:hidden; }
+    body { font-family:'Poppins',sans-serif; background:var(--bg-light); color:var(--text-dark); overflow-x:hidden;}
 
     /* Navigation */
     nav {
@@ -48,12 +48,13 @@
     header {
       background: var(--bg-dark);
       color:white; position:relative; overflow:hidden;
+      padding-bottom:1rem;
     }
     .header-bg { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; opacity:.15; }
     .header-bg-1 { background:linear-gradient(45deg,var(--primary),transparent); }
     .header-bg-2 { background:radial-gradient(circle at bottom right,var(--accent),transparent 60%); }
     .header-content {
-      padding:5rem 2rem;
+      padding:2rem 2rem;
       position:relative; z-index:2;
       text-align:center;
     }
@@ -68,6 +69,13 @@
     header p {
       margin-top:.5rem; font-size:1.2rem; color:var(--text-light);
     }
+    .hero-tagline {
+      color:var(--accent);
+      font-weight:300;
+      letter-spacing:1px;
+      margin-top:1rem;
+      font-size:1.75rem;
+    }
     .header-buttons {
       margin-top:2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
     }
@@ -75,12 +83,6 @@
       display:inline-block; padding:.75rem 1.5rem; border-radius:8px;
       font-weight:600; font-size:1rem; text-decoration:none; border:none;
       cursor:pointer; transition:all .3s;
-    }
-    .btn-primary {
-      background:var(--primary); color:white;
-    }
-    .btn-primary:hover {
-      background:var(--primary-dark); transform:translateY(-2px);
     }
     .btn-outline {
       background:transparent; color:var(--text-light); border:2px solid var(--text-light);
@@ -96,33 +98,16 @@
       filter:brightness(1.1); transform:translateY(-2px);
     }
 
-    /* Phone Demo */
-    .phone-demo { margin:2rem auto -5rem; position:relative; max-width:300px; z-index:3; }
-    .phone-frame {
-      width:100%; aspect-ratio:9/19; background:white;
-      border:8px solid #333; border-radius:2rem; overflow:hidden;
+    /* Demo UI section */
+    .demo-section { padding:5rem 1.5rem; max-width:960px; margin:auto; text-align:center; }
+    .demo-section .section-title { margin-bottom:2rem; }
+    .demo-iframe-container { display:flex; justify-content:center; }
+    .demo-iframe-container iframe {
+      width:300px;
+      height:600px;
+      border:8px solid #333;
+      border-radius:2rem;
       box-shadow:var(--shadow);
-    }
-    .phone-screen { display:flex; flex-direction:column; height:100%; padding:1rem; }
-    .phone-header { display:flex; justify-content:space-between; color:#666; font-size:.8rem; margin-bottom:1rem; }
-    .phone-title { text-align:center; margin-bottom:1rem; font-weight:600; }
-    .bill-item, .bill-total {
-      display:flex; justify-content:space-between; padding:.5rem 0; font-size:.8rem;
-    }
-    .bill-item { border-bottom:1px solid #eee; }
-    .bill-total { font-weight:600; font-size:.9rem; margin-top:1rem; }
-    .tip-options { display:flex; gap:.5rem; justify-content:center; margin:1rem 0; }
-    .tip-btn {
-      padding:.4rem .6rem; border:1px solid #ddd; border-radius:4px;
-      font-size:.7rem; cursor:pointer;
-    }
-    .tip-btn.active {
-      background:var(--primary); color:white; border-color:var(--primary);
-    }
-    .pay-btn {
-      margin-top:auto; width:100%; padding:.6rem; border:none;
-      background:var(--primary); color:white; font-weight:600;
-      border-radius:.5rem; cursor:pointer;
     }
 
     /* Sections */
@@ -197,6 +182,15 @@
       background:var(--primary); color:white; padding:.25rem .75rem;
       border-radius:2rem; font-size:.8rem; font-weight:600;
     }
+
+    /* Statistics */
+    .stats { display:flex; justify-content:center; gap:2rem; margin-top:2rem; }
+    .statbox {
+      background:var(--surface); padding:1.5rem; border-radius:1rem;
+      box-shadow:var(--shadow); text-align:center;
+    }
+    .statbox h3 { font-size:2rem; margin-bottom:.5rem; }
+    .statbox p { color:var(--text-muted); }
 
     /* Testimonials */
     .testimonial-slider { max-width:800px; margin:auto; overflow:hidden; position:relative; }
@@ -295,11 +289,12 @@
     .scroll-top:hover { background:var(--primary-dark); transform:translateY(-3px); }
 
     /* Mobile Nav */
-    @media (max-width:768px) {
+    @media (max-width:768px){
       .menu { position:fixed; top:60px; left:0; right:0; background:var(--bg-dark); padding:1rem; flex-direction:column; align-items:flex-start; transform:translateY(-150%); transition:transform .3s; }
       .menu.active { transform:translateY(0); }
       .hamburger { display:block; }
     }
+
     /* Fade-in utility */
     .fade-in { opacity:0; transform:translateY(20px); transition:opacity .5s ease,transform .5s ease; }
     .fade-in.active { opacity:1; transform:translateY(0); }
@@ -312,9 +307,12 @@
     <a href="#" class="nav-logo">Quick<span>Bill</span></a>
     <button class="hamburger"><i class="fas fa-bars"></i></button>
     <div class="menu">
+      <a href="https://docs.google.com/document/d/1NRXKBYwp4ZCRh2Aq-XuekW2bNVKKio0v/edit?usp=sharing" target="_blank">Business Foundation</a>
+      <a href="https://www.figma.com/design/yW3CvD7gD2Wi5ExbBqNK7A/QuickBill?node-id=0-1" target="_blank">Mock-up</a>
+      <a href="https://docs.google.com/presentation/d/1i2oh0M0wm4fNtzB4OTaOS8yOjDGlKsSaVYcMysAlYYk/edit?usp=sharing" target="_blank">Pitch</a>
       <a href="#features">Caracteristici</a>
       <a href="#pricing">Prețuri</a>
-      <a href="#demo">Demo</a>
+      <a href="#demoUI">Demo</a>
       <a href="#stats">Statistici</a>
       <a href="#faq">FAQ</a>
       <a href="#roadmap">Lansare</a>
@@ -332,35 +330,25 @@
         <span>QuickBill</span>
       </div>
       <p>Plăți rapide, moderne și fără aplicație, direct de la masă.</p>
-      <h2 style="color:#FACC15;font-weight:300;letter-spacing:1px; margin-top:1rem;">Scan. Pay. Done.</h2>
+      <div class="hero-tagline">Scan. Pay. Done.</div>
       <div class="header-buttons">
-        <a href="#demo" class="btn btn-accent">Încearcă Demo</a>
+        <a href="#demoUI" class="btn btn-accent">Încearcă Demo</a>
         <a href="#pricing" class="btn btn-outline">Vezi Prețuri</a>
-      </div>  
-      <div class="phone-demo fade-in">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-header">
-              <span>QuickBill</span><span>✓ Securizat</span>
-            </div>
-            <div class="phone-title">Nota de plată - Masa #42</div>
-            <div class="bill-item"><span>Pizza Margherita</span><span>38 LEI</span></div>
-            <div class="bill-item"><span>Paste Carbonara</span><span>42 LEI</span></div>
-            <div class="bill-item"><span>Limonadă</span><span>18 LEI</span></div>
-            <div class="bill-item"><span>Cappuccino</span><span>14 LEI</span></div>
-            <div class="bill-total"><span>Total:</span><span>112 LEI</span></div>
-            <div class="tip-options">
-              <div class="tip-btn">0%</div>
-              <div class="tip-btn active">10%</div>
-              <div class="tip-btn">15%</div>
-              <div class="tip-btn">20%</div>
-            </div>
-            <button class="pay-btn">Plătește 123.20 LEI</button>
-          </div>
-        </div>
       </div>
     </div>
   </header>
+
+  <!-- Embedded Demo UI -->
+  <section id="demoUI" class="demo-section fade-in">
+    <h2 class="section-title">Demo UI QuickBill</h2>
+    <div class="demo-iframe-container">
+      <iframe
+        src="https://mihai-ctn.github.io/quickbill-landing/quickbill-ui-demo.html"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
 
   <!-- Features -->
   <section id="features" class="fade-in">
@@ -435,7 +423,7 @@
             <li><i class="fas fa-check-circle"></i> Funcționalități de bază</li>
             <li><i class="fas fa-check-circle"></i> Suport email</li>
           </ul>
-          <a href="#contact" class="btn btn-primary">Începe Gratuit</a>
+          <a href="#contact" class="btn btn-accent">Începe Gratuit</a>
         </div>
       </div>
       <div class="pricing-card popular">
@@ -449,7 +437,7 @@
             <li><i class="fas fa-check-circle"></i> Până la 200 tranzacții</li>
             <li><i class="fas fa-check-circle"></i> Branding personalizat</li>
           </ul>
-          <a href="#contact" class="btn btn-primary">Alege Basic</a>
+          <a href="#contact" class="btn btn-accent">Alege Basic</a>
         </div>
       </div>
       <div class="pricing-card">
@@ -462,14 +450,11 @@
             <li><i class="fas fa-check-circle"></i> Tranzacții nelimitate</li>
             <li><i class="fas fa-check-circle"></i> Integrări POS avansate</li>
           </ul>
-          <a href="#contact" class="btn btn-primary">Alege Pro</a>
+          <a href="#contact" class="btn btn-accent">Alege Pro</a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Demo Anchor -->
-  <div id="stats"></div>
 
   <!-- Statistics -->
   <section id="stats" class="fade-in">
@@ -580,14 +565,14 @@
         <input class="form-control" type="text" id="name" placeholder="Nume" required>
         <input class="form-control" type="email" id="email" placeholder="Email" required>
         <textarea class="form-control" id="message" placeholder="Mesaj" required></textarea>
-        <button class="btn btn-primary" type="submit">Trimite</button>
+        <button class="btn btn-accent" type="submit">Trimite</button>
       </form>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-grid container">
+    <div class="footer-grid">
       <div>
         <div class="footer-logo"><i class="fas fa-bolt"></i> Quick<span>Bill</span></div>
         <p class="footer-desc">Simplificăm plata la restaurant prin tehnologie modernă și UX intuitiv.</p>
@@ -602,7 +587,7 @@
         <ul class="footer-links">
           <li><a href="#features">Caracteristici</a></li>
           <li><a href="#pricing">Prețuri</a></li>
-          <li><a href="#demo">Demo</a></li>
+          <li><a href="#demoUI">Demo</a></li>
         </ul>
       </div>
       <div>
@@ -618,7 +603,7 @@
         <ul class="footer-links">
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="#">Termeni & Condiții</a></li>
+          <li><a href="#">Termeni &amp; Condiții</a></li>
         </ul>
       </div>
     </div>
@@ -631,71 +616,56 @@
   </div>
 
   <script>
-    // Animate header and phone
+    // Animate header și demoUI
     gsap.from('.header-content', {opacity:0, y:50, duration:1});
-    gsap.from('.phone-demo', {opacity:0, y:50, duration:1, delay:0.5});
+    gsap.from('#demoUI', {opacity:0, y:50, duration:1, delay:0.5});
 
     // Fade-in on scroll
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.fade-in').forEach(el => {
-        ScrollTrigger.create({
-          trigger: el,
-          onEnter: () => el.classList.add('active')
-        });
+        ScrollTrigger.create({ trigger: el, onEnter: () => el.classList.add('active') });
       });
     });
 
-    // Counter animation
+    // Counter animație
     document.querySelectorAll('.statbox h3').forEach(counter => {
-      const update = () => {        
+      const update = () => {
         const target = +counter.getAttribute('data-target');
         const count = +counter.innerText;
-        const increment = Math.ceil(target / 200);
+        const inc = Math.ceil(target/200);
         if (count < target) {
-          counter.innerText = count + increment;
+          counter.innerText = count + inc;
           requestAnimationFrame(update);
-        } else {
-          counter.innerText = target;
-        }
+        } else counter.innerText = target;
       };
       update();
     });
 
     // Testimonial slider
-    let idx = 0;
-    const track = document.querySelector('.testimonial-track');
-    document.querySelector('.next').onclick = () => {
-      idx = (idx + 1) % track.children.length;
-      track.style.transform = `translateX(-${idx*100}%)`;
-    };
-    document.querySelector('.prev').onclick = () => {
-      idx = (idx - 1 + track.children.length) % track.children.length;
-      track.style.transform = `translateX(-${idx*100}%)`;
-    };
+    let idx=0;
+    const track=document.querySelector('.testimonial-track');
+    document.querySelector('.next').onclick=()=>{ idx=(idx+1)%track.children.length; track.style.transform=`translateX(-${idx*100}%)`; };
+    document.querySelector('.prev').onclick=()=>{ idx=(idx-1+track.children.length)%track.children.length; track.style.transform=`translateX(-${idx*100}%)`; };
 
     // Accordion
-    document.querySelectorAll('.accordion-header').forEach(h => {
-      h.onclick = () => {
-        h.parentElement.classList.toggle('active');
-      };
-    });
+    document.querySelectorAll('.accordion-header').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('active'));
 
     // Form validation
-    function validateForm() {
-      const n = document.getElementById('name').value.trim();
-      const e = document.getElementById('email').value.trim();
-      const m = document.getElementById('message').value.trim();
-      if (!n || !e || !m) { alert('Completează toate câmpurile'); return false; }
+    function validateForm(){
+      const n=document.getElementById('name').value.trim();
+      const e=document.getElementById('email').value.trim();
+      const m=document.getElementById('message').value.trim();
+      if(!n||!e||!m){ alert('Completează toate câmpurile'); return false; }
       alert('Mesaj trimis!'); return false;
     }
 
     // Scroll to top
-    window.addEventListener('scroll', () => {
-      document.querySelector('.scroll-top').classList.toggle('visible', window.scrollY > 300);
+    window.addEventListener('scroll',()=> {
+      document.querySelector('.scroll-top').classList.toggle('visible', window.scrollY>300);
     });
 
     // Mobile menu toggle
-    document.querySelector('.hamburger').onclick = () => {
+    document.querySelector('.hamburger').onclick=()=> {
       document.querySelector('.menu').classList.toggle('active');
     };
   </script>
